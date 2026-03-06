@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Aster Lounge favicon">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#e0b07b"/>
+      <stop offset="1" stop-color="#b9783f"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#1f1c1a"/>
+  <path d="M14 48L30 14h4l16 34h-7l-3-7H24l-3 7zM27 35h10l-5-12z" fill="url(#g)"/>
+  <circle cx="48" cy="18" r="3" fill="#f5eee4" opacity=".9"/>
+</svg>

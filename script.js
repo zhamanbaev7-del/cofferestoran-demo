@@ -403,7 +403,7 @@ const initLeafletMap = () => {
 
     L.marker([44.8488, 65.4823])
       .addTo(leafletMapInstance)
-      .bindPopup('Aster Lounge Cafe & Kitchen')
+      .bindPopup('Aster Lounge')
       .openPopup();
 
     const refreshMapSize = () => leafletMapInstance && leafletMapInstance.invalidateSize();
@@ -453,7 +453,7 @@ const BOOKING_SLOT_DURATION_MINUTES = 120;
 
 const ZONE_LABELS = {
   hall: 'Общий зал',
-  lounge: 'Lounge-зона',
+  lounge: 'Лаунж-зона',
   window: 'У окна',
   vip: 'VIP-комната',
   private: 'Закрытый зал'
@@ -633,16 +633,25 @@ const validateBookingPrerequisites = () => {
   return hasDate && hasTime && hasGuests;
 };
 
+const isBookingContextReady = (context) => {
+  if (!context) return false;
+  return Boolean(context.date && context.time && context.guests > 0);
+};
+
 const evaluateTableState = (table, context, zoneFilter) => {
+  const contextReady = isBookingContextReady(context);
   const isZoneFilteredOut = zoneFilter !== 'all' && table.zone !== zoneFilter;
   const capacityLocked = context.guests > 0 && table.capacity < context.guests;
-  const occupied = context.date && context.time ? isTableOccupiedForSlot(table.id, context.date, context.time) : false;
+  const occupied = contextReady ? isTableOccupiedForSlot(table.id, context.date, context.time) : false;
   const disabledByStatus = table.status === 'disabled';
 
   let state = 'free';
   let disabled = false;
 
-  if (disabledByStatus) {
+  if (!contextReady) {
+    state = 'awaiting';
+    disabled = true;
+  } else if (disabledByStatus) {
     state = 'disabled';
     disabled = true;
   } else if (occupied) {
@@ -709,6 +718,7 @@ const renderTableMap = () => {
   let capacityLockedCount = 0;
   let occupiedCount = 0;
   let disabledCount = 0;
+  let awaitingCount = 0;
 
   SAFE_TABLES.forEach((table) => {
     const tableButton = document.createElement('button');
@@ -736,6 +746,7 @@ const renderTableMap = () => {
     if (state === 'capacity-locked') capacityLockedCount += 1;
     if (state === 'occupied') occupiedCount += 1;
     if (state === 'disabled') disabledCount += 1;
+    if (state === 'awaiting') awaitingCount += 1;
 
     const stateLabel =
       state === 'occupied'
@@ -744,6 +755,8 @@ const renderTableMap = () => {
         ? 'Недоступен по вместимости'
         : state === 'disabled'
         ? 'Временно недоступен'
+        : state === 'awaiting'
+        ? 'Сначала выберите дату, время и гостей'
         : 'Свободен';
 
     tableButton.title = `${table.name} • ${table.capacity} мест • ${ZONE_LABELS[table.zone]} • ${stateLabel}`;
@@ -760,15 +773,15 @@ const renderTableMap = () => {
 
   if (tableHint) {
     let hintText = 'Бронь действует 2 часа от выбранного времени.';
-    if (!context.guests) {
-      hintText = 'Укажите количество гостей для корректного подбора столов.';
+    if (!isBookingContextReady(context)) {
+      hintText = 'Сначала выберите дату, время и количество гостей, чтобы увидеть доступные столы.';
     } else if (freeCount === 0) {
       hintText = 'На выбранные дату и время подходящих столов не найдено. Измените параметры.';
     } else if (capacityLockedCount > 0) {
       hintText = `Для ${context.guests} гостей часть столов скрыта по вместимости (${capacityLockedCount}).`;
     }
 
-    tableHint.innerHTML = `Доступно столов: <strong id="table-available-count">${freeCount}</strong> · Занято: ${occupiedCount} · Недоступно: ${capacityLockedCount + disabledCount}. ${hintText}`;
+    tableHint.innerHTML = `Доступно столов: <strong id="table-available-count">${freeCount}</strong> · Занято: ${occupiedCount} · Недоступно: ${capacityLockedCount + disabledCount}${awaitingCount ? ` · Ожидают параметров: ${awaitingCount}` : ''}. ${hintText}`;
   }
 
   updateTableContextPanel(getTableById(pendingTableId));
@@ -777,13 +790,8 @@ const renderTableMap = () => {
 const openTableModal = () => {
   if (!bookingForm || !tableModal) return;
 
-  const prerequisitesOk = validateBookingPrerequisites();
-  if (!prerequisitesOk) {
-    showToast('Сначала выберите дату, время и количество гостей.');
-    return;
-  }
-
   const context = getBookingContext();
+  validateBookingPrerequisites();
   const preferredZone = 'all';
   if (tableZoneFilter) {
     tableZoneFilter.value = preferredZone;
