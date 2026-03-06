@@ -91,12 +91,6 @@ textarea {
   isolation: isolate;
 }
 
-/* Render optimization for long one-page layouts */
-.section:not(.hero) {
-  content-visibility: auto;
-  contain-intrinsic-size: 900px;
-}
-
 h1,
 h2,
 h3 {
@@ -439,10 +433,8 @@ p {
   z-index: -2;
   background:
     linear-gradient(130deg, rgba(17, 18, 21, 0.88), rgba(31, 25, 22, 0.72)),
-    var(--section-bg-image, none) center / cover no-repeat,
     radial-gradient(circle at 18% 24%, rgba(197, 136, 84, 0.18), transparent 38%),
     radial-gradient(circle at 86% 72%, rgba(122, 94, 72, 0.22), transparent 46%);
-  background-blend-mode: normal, luminosity, normal, normal;
 }
 
 /* Мягкая вариативность по секциям */

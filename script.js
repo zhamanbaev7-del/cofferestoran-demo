@@ -235,15 +235,46 @@ if (lazyBgNodes.length) {
 // ==============================
 // AOS анимации
 // ==============================
-if (typeof AOS !== 'undefined') {
+const revealAOSFallback = () => {
+  // Если библиотека анимаций не загрузилась, не оставляем секции скрытыми.
+  document.querySelectorAll('[data-aos]').forEach((node) => {
+    node.classList.add('aos-animate');
+    node.style.opacity = '1';
+    node.style.transform = 'none';
+  });
+};
+
+const initScrollAnimations = () => {
+  if (typeof AOS === 'undefined') {
+    revealAOSFallback();
+    return;
+  }
+
+  let initialized = false;
   runSafely('AOS.init', () => {
     AOS.init({
-      duration: 900,
+      duration: 750,
       once: true,
-      offset: 80
+      offset: 24,
+      easing: 'ease-out-cubic'
     });
+    initialized = true;
   });
-}
+
+  if (!initialized) {
+    revealAOSFallback();
+    return;
+  }
+
+  // Поддержка динамического контента/ленивой загрузки.
+  window.setTimeout(() => {
+    if (typeof AOS !== 'undefined' && typeof AOS.refreshHard === 'function') {
+      AOS.refreshHard();
+    }
+  }, 350);
+};
+
+initScrollAnimations();
 
 // ==============================
 // Swiper слайдер
@@ -289,24 +320,71 @@ if (typeof lightbox !== 'undefined') {
 // Leaflet карта
 // Координаты можно поменять под нужный адрес
 // ==============================
-if (typeof L !== 'undefined' && document.getElementById('map')) {
-  runSafely('Leaflet.init', () => {
-    const map = L.map('map').setView([44.8488, 65.4823], 14);
+const mapNode = document.getElementById('map');
+let leafletMapInstance = null;
+
+const showMapFallback = () => {
+  if (!mapNode) return;
+  mapNode.innerHTML = `
+    <div style="display:grid;place-items:center;height:100%;min-height:320px;color:#dbcfbe;background:rgba(20,20,22,.35);text-align:center;padding:16px;">
+      Карта временно недоступна. Нажмите «Построить маршрут» выше.
+    </div>
+  `;
+};
+
+const initLeafletMap = () => {
+  if (!mapNode || leafletMapInstance || typeof L === 'undefined') return false;
+
+  const initialized = runSafely('Leaflet.init', () => {
+    leafletMapInstance = L.map('map', { zoomControl: true }).setView([44.8488, 65.4823], 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
+    }).addTo(leafletMapInstance);
 
     L.marker([44.8488, 65.4823])
-      .addTo(map)
+      .addTo(leafletMapInstance)
       .bindPopup('Aster Lounge Cafe & Kitchen')
       .openPopup();
 
-    const refreshMapSize = () => map.invalidateSize();
+    const refreshMapSize = () => leafletMapInstance && leafletMapInstance.invalidateSize();
     window.addEventListener('load', refreshMapSize);
     window.addEventListener('resize', refreshMapSize);
-    window.setTimeout(refreshMapSize, 500);
+    window.setTimeout(refreshMapSize, 350);
+    window.setTimeout(refreshMapSize, 1200);
+
+    // На случай инициализации до полной видимости секции.
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          refreshMapSize();
+          obs.disconnect();
+        });
+      }, { threshold: 0.2 });
+      observer.observe(mapNode);
+    }
   });
+
+  return Boolean(initialized);
+};
+
+if (mapNode) {
+  // Повторяем попытку инициализации, если Leaflet CDN подгружается с задержкой.
+  let attempts = 0;
+  const maxAttempts = 20; // ~10 секунд при 500ms интервале
+  const tryInitMap = () => {
+    attempts += 1;
+    if (initLeafletMap()) return;
+
+    if (attempts >= maxAttempts) {
+      showMapFallback();
+      return;
+    }
+    window.setTimeout(tryInitMap, 500);
+  };
+
+  tryInitMap();
 }
 
 // ==============================
