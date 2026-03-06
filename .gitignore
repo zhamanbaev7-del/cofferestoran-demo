@@ -8,6 +8,7 @@ Thumbs.db
 
 # Logs
 *.log
+.autosync.lock
 
 # Node
 node_modules/
