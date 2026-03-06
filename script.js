@@ -37,6 +37,57 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 // ==============================
+// Vintage hero typing animation
+// ==============================
+const initHeroTyping = () => {
+  const heroTitle = document.querySelector('.hero-title[data-typing-text]');
+  if (!heroTitle) return;
+
+  const titleText = (heroTitle.dataset.typingText || '').trim();
+  const subtitleText = (heroTitle.dataset.typingSubtitle || '').trim();
+  if (!titleText) return;
+
+  const renderFinal = () => {
+    heroTitle.textContent = titleText;
+    if (subtitleText) {
+      const subtitle = document.createElement('span');
+      subtitle.className = 'hero-title-sub';
+      subtitle.textContent = subtitleText;
+      heroTitle.appendChild(subtitle);
+    }
+    heroTitle.classList.add('done');
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderFinal();
+    return;
+  }
+
+  let index = 0;
+  heroTitle.textContent = '';
+  const typingInterval = 85;
+  let lastTime = 0;
+
+  const tick = (time) => {
+    if (time - lastTime >= typingInterval && index <= titleText.length) {
+      heroTitle.textContent = titleText.slice(0, index);
+      index += 1;
+      lastTime = time;
+    }
+
+    if (index <= titleText.length) {
+      window.requestAnimationFrame(tick);
+    } else {
+      renderFinal();
+    }
+  };
+
+  window.requestAnimationFrame(tick);
+};
+
+runSafely('initHeroTyping', initHeroTyping);
+
+// ==============================
 // Настройки Telegram
 // ВАЖНО: безопаснее отправлять через backend
 // ==============================

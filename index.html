@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -30,7 +30,10 @@
 <body>
   <header class="header" id="top">
     <div class="container nav-wrap">
-      <a class="logo" href="#top">Aster Lounge</a>
+      <a class="logo" href="#top" aria-label="Aster Lounge Coffee & Kitchen">
+        <span class="logo-script">Aster Lounge</span>
+        <span class="logo-serif">Coffee &amp; Kitchen</span>
+      </a>
 
       <nav class="nav" id="main-nav" aria-label="Основная навигация">
         <a href="#about">О нас</a>
@@ -58,7 +61,8 @@
       <div class="hero-overlay"></div>
       <div class="container hero-content" data-aos="fade-up">
         <p class="kicker">CITY LOUNGE / COFFEE & KITCHEN</p>
-        <h1>Городское пространство вкуса, кофе и вечерней атмосферы</h1>
+        <!-- Изменение текста анимации: правьте data-typing-text -->
+        <h1 class="hero-title" data-typing-text="Aster Lounge" data-typing-subtitle="Vintage Coffee House">Aster Lounge</h1>
         <p>
           Aster Lounge - современное место в центре города для завтраков, рабочих встреч,
           ужинов и уютных вечеров в приватной обстановке.
@@ -645,7 +649,10 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div>
-        <a class="logo" href="#top">Aster Lounge</a>
+        <a class="logo" href="#top" aria-label="Aster Lounge Coffee & Kitchen">
+          <span class="logo-script">Aster Lounge</span>
+          <span class="logo-serif">Coffee &amp; Kitchen</span>
+        </a>
         <p>Премиальный casual-формат для кофе, кухни, встреч и приватного отдыха.</p>
       </div>
 
