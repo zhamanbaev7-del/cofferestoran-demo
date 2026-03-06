@@ -694,9 +694,13 @@ p {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .menu-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border-radius: var(--radius);
   border: 1px solid var(--line);
@@ -710,16 +714,21 @@ p {
 }
 
 .menu-image {
+  flex: 0 0 180px;
   height: 180px;
   background-size: cover;
   background-position: center;
 }
 
 .menu-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 16px;
 }
 
 .menu-body p {
+  flex: 1;
   margin: 8px 0 12px;
   color: #ddcfbf;
 }
@@ -1263,6 +1272,23 @@ body.table-modal-open {
 
 .contacts-info a {
   color: #f1cc9f;
+}
+
+.contacts-info .btn,
+.contacts-info .btn:visited {
+  color: #1b1512;
+  border-color: rgba(245, 222, 190, 0.45);
+  background: linear-gradient(120deg, #e0b07b, #f0c892, #cd955f);
+  box-shadow: 0 8px 20px rgba(197, 136, 84, 0.28);
+}
+
+.contacts-info .btn i {
+  color: #1b1512;
+}
+
+.contacts-info .btn:hover {
+  color: #120e0c;
+  box-shadow: 0 10px 24px rgba(197, 136, 84, 0.38);
 }
 
 .contacts-info i {
