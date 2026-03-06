@@ -51,6 +51,17 @@ body {
   line-height: 1.5;
 }
 
+/* Custom text selection in brand palette */
+::selection {
+  background: rgba(197, 136, 84, 0.4);
+  color: #fff3e2;
+}
+
+::-moz-selection {
+  background: rgba(197, 136, 84, 0.4);
+  color: #fff3e2;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -603,6 +614,21 @@ p {
   padding-bottom: 8px;
   margin-bottom: 24px;
   scrollbar-width: thin;
+  scrollbar-color: rgba(197, 136, 84, 0.85) rgba(245, 238, 228, 0.18);
+}
+
+.menu-filters::-webkit-scrollbar {
+  height: 8px;
+}
+
+.menu-filters::-webkit-scrollbar-track {
+  background: rgba(245, 238, 228, 0.18);
+  border-radius: 999px;
+}
+
+.menu-filters::-webkit-scrollbar-thumb {
+  background: linear-gradient(120deg, #c58854, #9c6d45);
+  border-radius: 999px;
 }
 
 .filter-btn {

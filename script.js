@@ -89,11 +89,26 @@ runSafely('initHeroTyping', initHeroTyping);
 
 // ==============================
 // Настройки Telegram
-// ВАЖНО: безопаснее отправлять через backend
+// ВАЖНО: для продакшена безопаснее отправлять через backend.
+// Здесь runtime-конфиг берется из config.local.js (window.APP_CONFIG).
 // ==============================
 const TELEGRAM_BOOKING_CONFIG = {
   botToken: 'PASTE_YOUR_BOT_TOKEN',
   chatId: 'PASTE_YOUR_CHAT_ID'
+};
+
+const getTelegramConfig = () => {
+  const appConfig = window.APP_CONFIG?.telegram || {};
+  return {
+    botToken: (appConfig.botToken || TELEGRAM_BOOKING_CONFIG.botToken || '').trim(),
+    chatId: (appConfig.chatId || TELEGRAM_BOOKING_CONFIG.chatId || '').trim()
+  };
+};
+
+const validateTelegramConfig = (config) => {
+  if (!config.botToken || !config.chatId) return false;
+  if (config.botToken.includes('PASTE_') || config.chatId.includes('PASTE_')) return false;
+  return true;
 };
 
 // ==============================
@@ -733,11 +748,11 @@ const isEmailLike = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 // Отправка бронирования в Telegram
 // ==============================
 const sendBookingToTelegram = async (payload) => {
-  const config = window.TELEGRAM_BOOKING_CONFIG || TELEGRAM_BOOKING_CONFIG;
+  const config = getTelegramConfig();
   const { botToken, chatId } = config;
 
-  if (!botToken || !chatId || botToken.includes('PASTE_') || chatId.includes('PASTE_')) {
-    throw new Error('Telegram не настроен: заполните botToken и chatId в script.js');
+  if (!validateTelegramConfig(config)) {
+    throw new Error('Telegram не настроен: заполните config.local.js (botToken/chatId).');
   }
 
   const text = [
@@ -765,7 +780,16 @@ const sendBookingToTelegram = async (payload) => {
   });
 
   if (!response.ok) {
-    throw new Error('Не удалось отправить заявку в Telegram');
+    let reason = 'Не удалось отправить заявку в Telegram';
+    try {
+      const body = await response.json();
+      if (body?.description) {
+        reason = `Telegram error: ${body.description}`;
+      }
+    } catch {
+      // ignore parse errors and keep default reason
+    }
+    throw new Error(reason);
   }
 };
 
