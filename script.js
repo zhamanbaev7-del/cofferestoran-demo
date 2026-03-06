@@ -16,6 +16,27 @@ const showToast = (message) => {
 };
 
 // ==============================
+// Anti-crash guards
+// ==============================
+const runSafely = (scope, fn) => {
+  try {
+    return fn();
+  } catch (error) {
+    console.error(`[${scope}]`, error);
+    showToast('Произошла техническая ошибка. Интерфейс продолжает работу.');
+    return null;
+  }
+};
+
+window.addEventListener('error', (event) => {
+  console.error('[window.error]', event.error || event.message);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('[unhandledrejection]', event.reason);
+});
+
+// ==============================
 // Настройки Telegram
 // ВАЖНО: безопаснее отправлять через backend
 // ==============================
@@ -149,10 +170,12 @@ if (lazyBgNodes.length) {
 // AOS анимации
 // ==============================
 if (typeof AOS !== 'undefined') {
-  AOS.init({
-    duration: 900,
-    once: true,
-    offset: 80
+  runSafely('AOS.init', () => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      offset: 80
+    });
   });
 }
 
@@ -160,21 +183,23 @@ if (typeof AOS !== 'undefined') {
 // Swiper слайдер
 // ==============================
 if (typeof Swiper !== 'undefined' && document.querySelector('.aster-swiper')) {
-  new Swiper('.aster-swiper', {
-    loop: true,
-    speed: 900,
-    autoplay: {
-      delay: 3500,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    }
+  runSafely('Swiper.init', () => {
+    new Swiper('.aster-swiper', {
+      loop: true,
+      speed: 900,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }
+    });
   });
 }
 
@@ -182,13 +207,15 @@ if (typeof Swiper !== 'undefined' && document.querySelector('.aster-swiper')) {
 // Lightbox настройки
 // ==============================
 if (typeof lightbox !== 'undefined') {
-  lightbox.option({
-    resizeDuration: 200,
-    wrapAround: true,
-    albumLabel: 'Изображение %1 из %2',
-    fadeDuration: 300,
-    imageFadeDuration: 300,
-    disableScrolling: true
+  runSafely('lightbox.option', () => {
+    lightbox.option({
+      resizeDuration: 200,
+      wrapAround: true,
+      albumLabel: 'Изображение %1 из %2',
+      fadeDuration: 300,
+      imageFadeDuration: 300,
+      disableScrolling: true
+    });
   });
 }
 
@@ -197,21 +224,23 @@ if (typeof lightbox !== 'undefined') {
 // Координаты можно поменять под нужный адрес
 // ==============================
 if (typeof L !== 'undefined' && document.getElementById('map')) {
-  const map = L.map('map').setView([44.8488, 65.4823], 14);
+  runSafely('Leaflet.init', () => {
+    const map = L.map('map').setView([44.8488, 65.4823], 14);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
 
-  L.marker([44.8488, 65.4823])
-    .addTo(map)
-    .bindPopup('Aster Lounge Cafe & Kitchen')
-    .openPopup();
+    L.marker([44.8488, 65.4823])
+      .addTo(map)
+      .bindPopup('Aster Lounge Cafe & Kitchen')
+      .openPopup();
 
-  const refreshMapSize = () => map.invalidateSize();
-  window.addEventListener('load', refreshMapSize);
-  window.addEventListener('resize', refreshMapSize);
-  window.setTimeout(refreshMapSize, 500);
+    const refreshMapSize = () => map.invalidateSize();
+    window.addEventListener('load', refreshMapSize);
+    window.addEventListener('resize', refreshMapSize);
+    window.setTimeout(refreshMapSize, 500);
+  });
 }
 
 // ==============================
@@ -280,6 +309,8 @@ let pendingTableId = null;
 const parseTimeToMinutes = (time) => {
   if (!time || !time.includes(':')) return NaN;
   const [hours, minutes] = time.split(':').map(Number);
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return NaN;
+  if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return NaN;
   return hours * 60 + minutes;
 };
 
@@ -295,6 +326,19 @@ const getBookingContext = () => {
 };
 
 const getTableById = (tableId) => RESTAURANT_TABLES.find((table) => table.id === tableId);
+
+const sanitizeTables = (tables) =>
+  tables.filter((table) =>
+    table &&
+    typeof table.id === 'string' &&
+    typeof table.name === 'string' &&
+    typeof table.capacity === 'number' &&
+    typeof table.zone === 'string' &&
+    typeof table.x === 'number' &&
+    typeof table.y === 'number'
+  );
+
+const SAFE_TABLES = sanitizeTables(RESTAURANT_TABLES);
 
 const isTableOccupiedForSlot = (tableId, date, time) => {
   const targetStart = parseTimeToMinutes(time);
@@ -429,14 +473,18 @@ const renderTableMap = () => {
   const zoneFilterValue = tableZoneFilter.value || 'all';
 
   tableMap.innerHTML = '';
+  if (!SAFE_TABLES.length) {
+    tableMap.innerHTML = '<p style=\"padding:12px;color:#d9d0c5;\">Схема столов временно недоступна.</p>';
+    return;
+  }
 
   let freeCount = 0;
-  RESTAURANT_TABLES.forEach((table) => {
+  SAFE_TABLES.forEach((table) => {
     const tableButton = document.createElement('button');
     tableButton.type = 'button';
     tableButton.className = `table-node table-node--${table.shape === 'round' ? 'round' : 'rect'} table-node--${table.size}`;
-    tableButton.style.setProperty('--x', table.x);
-    tableButton.style.setProperty('--y', table.y);
+    tableButton.style.setProperty('--x', String(Math.max(5, Math.min(95, table.x))));
+    tableButton.style.setProperty('--y', String(Math.max(8, Math.min(92, table.y))));
 
     const { state, disabled, isZoneFilteredOut } = evaluateTableState(table, context, zoneFilterValue);
 
