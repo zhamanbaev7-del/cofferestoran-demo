@@ -133,17 +133,40 @@ const TELEGRAM_BOOKING_CONFIG = {
   chatId: 'PASTE_YOUR_CHAT_ID'
 };
 
+const isPlaceholderConfigValue = (value) => {
+  if (!value) return true;
+  return String(value).includes('PASTE_');
+};
+
+const pickFirstValidConfigValue = (...values) => {
+  for (const rawValue of values) {
+    const value = String(rawValue || '').trim();
+    if (!value || isPlaceholderConfigValue(value)) continue;
+    return value;
+  }
+  return '';
+};
+
 const getTelegramConfig = () => {
   const appConfig = window.APP_CONFIG?.telegram || {};
+  const metaBotToken = document
+    .querySelector('meta[name="telegram-bot-token"]')
+    ?.getAttribute('content')
+    ?.trim() || '';
+  const metaChatId = document
+    .querySelector('meta[name="telegram-chat-id"]')
+    ?.getAttribute('content')
+    ?.trim() || '';
+
   return {
-    botToken: (appConfig.botToken || TELEGRAM_BOOKING_CONFIG.botToken || '').trim(),
-    chatId: (appConfig.chatId || TELEGRAM_BOOKING_CONFIG.chatId || '').trim()
+    botToken: pickFirstValidConfigValue(appConfig.botToken, metaBotToken, TELEGRAM_BOOKING_CONFIG.botToken),
+    chatId: pickFirstValidConfigValue(appConfig.chatId, metaChatId, TELEGRAM_BOOKING_CONFIG.chatId)
   };
 };
 
 const validateTelegramConfig = (config) => {
   if (!config.botToken || !config.chatId) return false;
-  if (config.botToken.includes('PASTE_') || config.chatId.includes('PASTE_')) return false;
+  if (isPlaceholderConfigValue(config.botToken) || isPlaceholderConfigValue(config.chatId)) return false;
   return true;
 };
 
@@ -436,10 +459,17 @@ const ZONE_LABELS = {
   private: 'Закрытый зал'
 };
 
+const formatLocalDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const getDateWithOffset = (daysOffset) => {
   const now = new Date();
   now.setDate(now.getDate() + daysOffset);
-  return now.toISOString().split('T')[0];
+  return formatLocalDate(now);
 };
 
 // Редактирование столов:
@@ -914,7 +944,7 @@ const sendBookingToTelegram = async (payload) => {
   const { botToken, chatId } = config;
 
   if (!validateTelegramConfig(config)) {
-    throw new Error('Telegram не настроен: заполните config.local.js (botToken/chatId).');
+    throw new Error('Telegram не настроен: задайте botToken/chatId в config.local.js или meta-тегах index.html.');
   }
 
   const text = [
@@ -1014,7 +1044,7 @@ const handleFormSubmit = (form, successMessage, customValidation, submitHandler,
 if (bookingForm) {
   const dateInput = bookingForm.querySelector('[name="date"]');
   if (dateInput) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = formatLocalDate(new Date());
     dateInput.min = today;
   }
 
