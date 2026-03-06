@@ -1,0 +1,749 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="City Lounge Cafe & Kitchen - городское пространство для кофе, завтраков, ужинов и приватного отдыха." />
+  <title>City Lounge Cafe & Kitchen</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- Lightbox -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header" id="top">
+    <div class="container nav-wrap">
+      <a class="logo" href="#top">Aster Lounge</a>
+
+      <nav class="nav" id="main-nav" aria-label="Основная навигация">
+        <a href="#about">О нас</a>
+        <a href="#menu">Меню</a>
+        <a href="#vip">VIP</a>
+        <a href="#booking">Бронирование</a>
+        <a href="#feedback">Обращения</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <a class="btn btn-sm book-btn" href="#booking">Забронировать</a>
+
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content" data-aos="fade-up">
+        <p class="kicker">CITY LOUNGE / COFFEE & KITCHEN</p>
+        <h1>Городское пространство вкуса, кофе и вечерней атмосферы</h1>
+        <p>
+          Aster Lounge - современное место в центре города для завтраков, рабочих встреч,
+          ужинов и уютных вечеров в приватной обстановке.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#menu" class="btn">Смотреть меню</a>
+          <a href="#booking" class="btn btn-outline">Забронировать столик</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+
+      <div class="about-overlay" aria-hidden="true"></div>
+
+      <div class="container about-content">
+        <div class="section-head about-head" data-aos="fade-up">
+          <p class="kicker">О ЗАВЕДЕНИИ</p>
+          <h2>Не просто кафе. Не просто ресторан.</h2>
+          <p>
+            Мы объединили specialty coffee, продуманную kitchen-концепцию и lounge-настроение.
+            Днем здесь удобно работать и встречаться, вечером - отдыхать, праздновать и проводить
+            камерные события в приватных пространствах.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="card" data-aos="fade-up" data-aos-delay="0">
+            <h3><i class="fa-solid fa-mug-hot"></i> Specialty coffee</h3>
+            <p>Собственное меню зерна, альтернативные методы и авторские подачи.</p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="50">
+            <h3><i class="fa-solid fa-utensils"></i> Kitchen every day</h3>
+            <p>Завтраки весь день, сбалансированные ланчи и выразительные вечерние позиции.</p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="100">
+            <h3><i class="fa-solid fa-couch"></i> Интерьер city lounge</h3>
+            <p>Мягкий свет, натуральные материалы, премиальный и спокойный ритм.</p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="150">
+            <h3><i class="fa-solid fa-door-closed"></i> VIP-комнаты</h3>
+            <p>Приватные зоны для компаний, встреч и событий с отдельным сервисом.</p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="200">
+            <h3><i class="fa-solid fa-calendar-check"></i> Онлайн-бронирование</h3>
+            <p>Быстрая бронь столиков и закрытых комнат в удобное время.</p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="250">
+            <h3><i class="fa-solid fa-clock"></i> Комфорт весь день</h3>
+            <p>Утренний кофе, дневные встречи и вечерняя атмосфера в одном месте.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu" id="menu">
+      <div class="section-collage menu-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container section-content">
+        <div class="section-head" data-aos="fade-up">
+          <p class="kicker">МЕНЮ</p>
+          <h2>Еда и напитки на любой ритм дня</h2>
+          <p>Ниже демонстрационные позиции, которые можно быстро заменить в разметке.</p>
+        </div>
+
+        <div class="menu-filters" role="tablist" aria-label="Категории меню" data-aos="fade-up">
+          <button class="filter-btn active" data-filter="all">Все</button>
+          <button class="filter-btn" data-filter="breakfast">Завтраки</button>
+          <button class="filter-btn" data-filter="salads">Салаты и закуски</button>
+          <button class="filter-btn" data-filter="main">Основные</button>
+          <button class="filter-btn" data-filter="signature">Паста / Гриль</button>
+          <button class="filter-btn" data-filter="dessert">Десерты</button>
+          <button class="filter-btn" data-filter="coffee">Кофе</button>
+          <button class="filter-btn" data-filter="tea">Чай</button>
+          <button class="filter-btn" data-filter="lemonade">Лимонады</button>
+          <button class="filter-btn" data-filter="cocktail">Коктейли</button>
+          <button class="filter-btn" data-filter="drinks">Фирменные</button>
+        </div>
+
+        <div class="menu-grid" id="menu-grid">
+          <article class="menu-card" data-category="breakfast" data-aos="zoom-in">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Бриошь с лососем и яйцом пашот</h3>
+              <p>Авокадо-крем, микрозелень, цитрусовый акцент.</p>
+              <div class="price">4 200 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="breakfast" data-aos="zoom-in" data-aos-delay="50">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Сырники с соленой карамелью</h3>
+              <p>Творожные сырники, сметанный крем, ягоды сезона.</p>
+              <div class="price">3 100 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="salads" data-aos="zoom-in" data-aos-delay="100">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Теплый салат с телятиной</h3>
+              <p>Глазированная морковь, шпинат, ореховый соус.</p>
+              <div class="price">4 800 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="main" data-aos="zoom-in">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Куриное филе су-вид</h3>
+              <p>Пюре из цветной капусты и соус на травах.</p>
+              <div class="price">5 300 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="signature" data-aos="zoom-in" data-aos-delay="50">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Паста с трюфельным кремом</h3>
+              <p>Домашняя паста, пармезан, грибной дюксель.</p>
+              <div class="price">5 900 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="signature" data-aos="zoom-in" data-aos-delay="100">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Стейк из говядины</h3>
+              <p>Пряный демиглас, запеченный картофель, зелень.</p>
+              <div class="price">8 700 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="dessert" data-aos="zoom-in">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Тарт с сезонными ягодами</h3>
+              <p>Ванильный крем, миндальная основа.</p>
+              <div class="price">2 900 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="coffee" data-aos="zoom-in" data-aos-delay="50">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Flat White Signature</h3>
+              <p>Плотный эспрессо-бленд и шелковистое молоко.</p>
+              <div class="price">1 700 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="tea" data-aos="zoom-in" data-aos-delay="100">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Улун Габа</h3>
+              <p>Глубокий вкус сухофруктов и медовый аромат.</p>
+              <div class="price">2 100 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="lemonade" data-aos="zoom-in">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1523371683702-592d2a0d69cf?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Лимонад Юдзу-Тархун</h3>
+              <p>Освежающий микс цитруса, трав и льда.</p>
+              <div class="price">2 400 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="cocktail" data-aos="zoom-in" data-aos-delay="50">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1514361892635-6f5f3b0a9f70?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Amber Negroni</h3>
+              <p>Крафтовый биттер, апельсиновая цедра, лед.</p>
+              <div class="price">3 900 ₸</div>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="drinks" data-aos="zoom-in" data-aos-delay="100">
+            <div class="menu-image" style="background-image:url('https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="menu-body">
+              <h3>Smoked Berry Tonic</h3>
+              <p>Домашний ягодный кордиал, тоник и легкий дым.</p>
+              <div class="price">3 300 ₸</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section vip" id="vip">
+      <div class="section-collage vip-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1560053608-13721e0d69e8?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container section-content">
+        <div class="section-head" data-aos="fade-up">
+          <p class="kicker">PRIVATE LOUNGE</p>
+          <h2>VIP-комнаты и закрытые залы</h2>
+          <p>Идеально для дней рождения, камерных ужинов, деловых встреч и частных событий.</p>
+        </div>
+
+        <div class="vip-grid">
+          <article class="vip-card" data-aos="fade-up">
+            <h3>Room Noir</h3>
+            <p class="capacity">до 8 гостей</p>
+            <p>Теплый свет, мягкая посадка и приватный акустический фон.</p>
+            <ul>
+              <li>Отдельное обслуживание</li>
+              <li>Комфорт для деловых переговоров</li>
+              <li>Стильный интерьер</li>
+            </ul>
+            <a class="btn btn-sm" href="#booking">Забронировать</a>
+          </article>
+
+          <article class="vip-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>Amber Lounge</h3>
+            <p class="capacity">до 12 гостей</p>
+            <p>Лаунж-зона для дружеских встреч и семейных вечеров.</p>
+            <ul>
+              <li>Мягкая посадка</li>
+              <li>Приватная атмосфера</li>
+              <li>Индивидуальная подача</li>
+            </ul>
+            <a class="btn btn-sm" href="#booking">Забронировать</a>
+          </article>
+
+          <article class="vip-card" data-aos="fade-up" data-aos-delay="200">
+            <h3>Private Hall Atelier</h3>
+            <p class="capacity">до 20 гостей</p>
+            <p>Закрытый зал для камерных мероприятий и праздников.</p>
+            <ul>
+              <li>Формат small event</li>
+              <li>Гибкая рассадка</li>
+              <li>Подходит для торжеств</li>
+            </ul>
+            <a class="btn btn-sm" href="#booking">Забронировать</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="section-collage booking-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1553729784-e91953dec042?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container booking-grid section-content">
+        <div class="section-head" data-aos="fade-right">
+          <p class="kicker">BOOKING</p>
+          <h2>Бронирование столика</h2>
+          <p>
+            Оставьте заявку, и администратор подтвердит бронь. Логику отправки можно подключить
+            к Telegram, email или backend в <code>script.js</code>.
+          </p>
+        </div>
+
+        <form id="booking-form" class="form" data-aos="fade-left" novalidate>
+          <label>Имя <input type="text" name="name" required /></label>
+          <label>Телефон <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" /></label>
+          <label>Дата <input type="date" name="date" required /></label>
+          <label>Время <input type="time" name="time" required /></label>
+
+          <label>Количество гостей
+            <select name="guests" required>
+              <option value="">Выберите</option>
+              <option value="1">1 гость</option>
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+              <option value="5">5 гостей</option>
+              <option value="6">6 гостей</option>
+              <option value="7">7 гостей</option>
+              <option value="8">8 гостей</option>
+              <option value="9">9 гостей</option>
+              <option value="10">10+ гостей</option>
+            </select>
+          </label>
+
+          <label>Зона
+            <select name="zone" required>
+              <option value="">Выберите зону</option>
+              <option value="hall">Общий зал</option>
+              <option value="lounge">Lounge-зона</option>
+              <option value="window">У окна</option>
+              <option value="vip">VIP-комната</option>
+              <option value="private">Закрытый зал</option>
+            </select>
+          </label>
+
+          <div class="booking-table-picker full">
+            <button type="button" class="btn btn-outline" id="open-table-modal">
+              Выбрать стол на схеме
+            </button>
+            <p class="table-picker-note">
+              Сначала укажите дату, время и количество гостей, затем выберите стол на интерактивной схеме.
+            </p>
+          </div>
+
+          <div id="booking-summary" class="booking-summary full" aria-live="polite">
+            <p><strong>Дата:</strong> <span data-summary="date">-</span></p>
+            <p><strong>Время:</strong> <span data-summary="time">-</span></p>
+            <p><strong>Гости:</strong> <span data-summary="guests">-</span></p>
+            <p><strong>Зона:</strong> <span data-summary="zone">-</span></p>
+            <p><strong>Стол:</strong> <span data-summary="table">Стол не выбран</span></p>
+          </div>
+
+          <input type="hidden" name="tableId" id="booking-table-id" />
+          <input type="hidden" name="tableLabel" id="booking-table-label" />
+          <input type="hidden" name="tableCapacity" id="booking-table-capacity" />
+          <input type="hidden" name="tableZone" id="booking-table-zone" />
+
+          <label class="full">
+            Комментарий
+            <textarea name="comment" rows="4" placeholder="Пожелания по столу или мероприятию"></textarea>
+          </label>
+
+          <button type="submit" class="btn full">Отправить заявку</button>
+          <p class="form-note full">Администратор свяжется с вами после обработки заявки.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section feedback" id="feedback">
+      <div class="section-collage feedback-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1588776814546-ec7e5f5b30f8?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container feedback-grid section-content">
+        <div class="section-head" data-aos="fade-right">
+          <p class="kicker">СЕРВИС И КАЧЕСТВО</p>
+          <h2>Предложения и жалобы</h2>
+          <p>Каждое обращение рассматривается администрацией заведения.</p>
+        </div>
+
+        <form id="feedback-form" class="form" data-aos="fade-left" novalidate>
+          <label>Имя <input type="text" name="name" required /></label>
+          <label>Телефон или Email <input type="text" name="contact" required /></label>
+
+          <label>Тип обращения
+            <select name="type" required>
+              <option value="">Выберите</option>
+              <option>Предложение</option>
+              <option>Жалоба</option>
+              <option>Благодарность</option>
+              <option>Вопрос</option>
+            </select>
+          </label>
+
+          <label class="full">
+            Сообщение
+            <textarea name="message" rows="5" required placeholder="Опишите ваше обращение"></textarea>
+          </label>
+
+          <button type="submit" class="btn full">Отправить обращение</button>
+          <p class="form-note full">Обращение будет передано администрации заведения.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section showcase">
+      <div class="section-collage showcase-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container section-content">
+        <div class="section-head" data-aos="fade-up">
+          <p class="kicker">SHOWCASE</p>
+          <h2>Атмосфера Aster Lounge</h2>
+        </div>
+
+        <div class="swiper aster-swiper" data-aos="fade-up">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80" alt="Интерьер ресторана" />
+            </div>
+            <div class="swiper-slide">
+              <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=80" alt="Подача блюд" />
+            </div>
+            <div class="swiper-slide">
+              <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1400&q=80" alt="Коктейли" />
+            </div>
+          </div>
+
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <div class="section-collage gallery-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1560053608-13721e0d69e8?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container section-content">
+        <div class="section-head" data-aos="fade-up">
+          <p class="kicker">ATMOSPHERE</p>
+          <h2>Галерея пространства</h2>
+          <p>Интерьер, блюда, кофе, коктейли и приватные зоны.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Интерьер city lounge" data-aos="zoom-in">
+            <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80" alt="Интерьер city lounge" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Уютная посадка" data-aos="zoom-in" data-aos-delay="50">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Уютная посадка" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Подача кофе" data-aos="zoom-in" data-aos-delay="100">
+            <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80" alt="Подача кофе" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Подача блюд" data-aos="zoom-in">
+            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80" alt="Подача блюд" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Коктейли" data-aos="zoom-in" data-aos-delay="50">
+            <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=800&q=80" alt="Коктейли" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1560053608-13721e0d69e8?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="VIP-комната" data-aos="zoom-in" data-aos-delay="100">
+            <img src="https://images.unsplash.com/photo-1560053608-13721e0d69e8?auto=format&fit=crop&w=800&q=80" alt="VIP-комната" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Вечерняя атмосфера" data-aos="zoom-in">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80" alt="Вечерняя атмосфера" />
+          </a>
+
+          <a class="gallery-item" href="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80" data-lightbox="aster-gallery" data-title="Детали сервировки" data-aos="zoom-in" data-aos-delay="50">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80" alt="Детали сервировки" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reviews" id="reviews">
+      <div class="section-collage reviews-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container section-content">
+        <div class="section-head" data-aos="fade-up">
+          <p class="kicker">ОТЗЫВЫ</p>
+          <h2>Что говорят гости</h2>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="review-card" data-aos="fade-up">
+            <h3>Алия Т.</h3>
+            <p class="stars">★★★★★</p>
+            <p>Лучшие завтраки в районе и очень спокойная атмосфера для работы днем.</p>
+          </article>
+
+          <article class="review-card" data-aos="fade-up" data-aos-delay="50">
+            <h3>Никита Л.</h3>
+            <p class="stars">★★★★★</p>
+            <p>Сервис на уровне, интерьер стильный, бронирование через сайт заняло минуту.</p>
+          </article>
+
+          <article class="review-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>Марина К.</h3>
+            <p class="stars">★★★★★</p>
+            <p>Брали VIP-комнату на день рождения - уютно, приватно и без лишнего шума.</p>
+          </article>
+
+          <article class="review-card" data-aos="fade-up">
+            <h3>Данияр С.</h3>
+            <p class="stars">★★★★☆</p>
+            <p>Хорошая карта авторских напитков и сильная кухня для вечернего формата.</p>
+          </article>
+
+          <article class="review-card" data-aos="fade-up" data-aos-delay="50">
+            <h3>Екатерина М.</h3>
+            <p class="stars">★★★★★</p>
+            <p>Место для встреч с друзьями и свиданий. Очень теплый свет и приятная музыка.</p>
+          </article>
+
+          <article class="review-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>Руслан А.</h3>
+            <p class="stars">★★★★★</p>
+            <p>Понравилось, что есть закрытый зал для деловых встреч и отдельное обслуживание.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contacts" id="contacts">
+      <div class="section-collage contacts-collage" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1449247613801-ab06418e2861?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80" alt="" />
+        <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=900&q=80" alt="" />
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
+
+      <div class="container contacts-grid section-content">
+        <div class="contacts-info" data-aos="fade-right">
+          <p class="kicker">КОНТАКТЫ</p>
+          <h2>Aster Lounge Cafe & Kitchen</h2>
+
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Адрес:</strong> г. Кызылорда, пр. Абая, 58</p>
+          <p><i class="fa-solid fa-phone"></i> <strong>Телефон:</strong> <a href="tel:+77715551234">+7 771 555 12 34</a></p>
+          <p><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp:</strong> <a href="https://wa.me/77715551234" target="_blank" rel="noopener">Написать</a></p>
+          <p><i class="fa-brands fa-telegram"></i> <strong>Telegram:</strong> <a href="https://t.me/aster_lounge" target="_blank" rel="noopener">@aster_lounge</a></p>
+          <p><i class="fa-regular fa-clock"></i> <strong>Часы работы:</strong> Пн-Вс, 08:00 - 01:00</p>
+
+          <a class="btn btn-sm" href="https://maps.google.com" target="_blank" rel="noopener">
+            <i class="fa-solid fa-route"></i> Построить маршрут
+          </a>
+        </div>
+
+        <div id="map" class="map-box" data-aos="fade-left"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="logo" href="#top">Aster Lounge</a>
+        <p>Премиальный casual-формат для кофе, кухни, встреч и приватного отдыха.</p>
+      </div>
+
+      <div>
+        <h3>Навигация</h3>
+        <a href="#menu">Меню</a>
+        <a href="#vip">VIP-комнаты</a>
+        <a href="#booking">Бронирование</a>
+        <a href="#contacts">Контакты</a>
+      </div>
+
+      <div>
+        <h3>Контакты</h3>
+        <a href="tel:+77715551234">+7 771 555 12 34</a>
+        <a href="mailto:hello@asterlounge.kz">hello@asterlounge.kz</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+
+    <div class="container copyright">© 2026 Aster Lounge Cafe & Kitchen. Все права защищены.</div>
+  </footer>
+
+  <div class="table-modal" id="table-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="table-modal-title">
+    <div class="table-modal-backdrop" data-close-table-modal></div>
+    <div class="table-modal-panel">
+      <button class="table-modal-close" id="close-table-modal" type="button" aria-label="Закрыть схему столов">×</button>
+
+      <div class="table-modal-head">
+        <p class="kicker">TABLE MAP</p>
+        <h3 id="table-modal-title">Выбор стола в зале</h3>
+        <p>Свободные столы кликабельны. Занятые и неподходящие по вместимости выбрать нельзя.</p>
+      </div>
+
+      <div class="table-legend">
+        <span><i class="dot dot-free"></i>Свободен</span>
+        <span><i class="dot dot-occupied"></i>Занят</span>
+        <span><i class="dot dot-selected"></i>Выбран</span>
+        <span><i class="dot dot-capacity"></i>Недоступен по вместимости</span>
+        <span><i class="dot dot-disabled"></i>Временно недоступен</span>
+      </div>
+
+      <div class="table-modal-controls">
+        <label>Фильтр зоны
+          <select id="table-zone-filter">
+            <option value="all">Все зоны</option>
+            <option value="hall">Общий зал</option>
+            <option value="lounge">Lounge-зона</option>
+            <option value="window">У окна</option>
+            <option value="vip">VIP-комната</option>
+            <option value="private">Закрытый зал</option>
+          </select>
+        </label>
+
+        <button type="button" class="btn btn-sm btn-outline" id="clear-table-selection">Очистить выбор</button>
+      </div>
+
+      <p class="table-hint" id="table-hint">
+        Доступно столов: <strong id="table-available-count">0</strong>. Бронь действует 2 часа от выбранного времени.
+      </p>
+
+      <div class="table-context" id="table-context">
+        <p><strong>Дата:</strong> <span data-context="date">-</span></p>
+        <p><strong>Время:</strong> <span data-context="time">-</span></p>
+        <p><strong>Гости:</strong> <span data-context="guests">-</span></p>
+        <p><strong>Стол:</strong> <span data-context="table">-</span></p>
+        <p><strong>Вместимость:</strong> <span data-context="capacity">-</span></p>
+        <p><strong>Зона:</strong> <span data-context="zone">-</span></p>
+      </div>
+
+      <div class="floor-layout">
+        <div class="floor-decor decor-bar">BAR</div>
+        <div class="floor-decor decor-window">ПАНОРАМНЫЕ ОКНА</div>
+        <div class="floor-decor decor-entry">ВХОД</div>
+        <div class="floor-decor decor-stage">LIVE CORNER</div>
+        <div class="table-map" id="table-map"></div>
+      </div>
+
+      <div class="table-modal-footer">
+        <p id="selected-table-info">Стол пока не выбран</p>
+        <button type="button" class="btn" id="confirm-table-selection" disabled>Подтвердить стол</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <!-- Swiper -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Lightbox -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
