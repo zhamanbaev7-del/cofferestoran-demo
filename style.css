@@ -303,23 +303,64 @@ p {
   letter-spacing: 0.01em;
   color: #f6e7d2;
   text-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+  display: inline-block;
+  position: relative;
+  line-height: 1.2;
+  padding-bottom: 0.08em;
+  overflow: visible;
+  margin-bottom: clamp(28px, 4vw, 44px);
 }
 
 .hero-title-sub {
   display: block;
-  margin-top: 8px;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  margin-top: 0;
   font-family: var(--serif-font);
   font-size: clamp(0.95rem, 1.8vw, 1.2rem);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #d8c3a5;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.hero-title.done .hero-title-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-title-main {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: clip-path, filter;
+  line-height: 1.2;
+  padding-bottom: 0.08em;
+}
+
+.hero-pen {
+  position: absolute;
+  left: 0;
+  top: 58%;
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(246, 231, 210, 0.15), rgba(246, 231, 210, 0.85));
+  box-shadow: 0 0 14px rgba(246, 231, 210, 0.45);
+  pointer-events: none;
+  will-change: transform;
 }
 
 .hero-title::after {
-  content: "|";
-  margin-left: 6px;
-  color: #ddb98d;
-  animation: vintage-caret 1s steps(1) infinite;
+  content: "";
+  display: none;
+}
+
+.hero-title.is-writing::after {
+  opacity: 0;
+  animation: none;
 }
 
 .hero-title.done::after {

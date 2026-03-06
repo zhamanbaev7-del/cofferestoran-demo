@@ -48,14 +48,25 @@ const initHeroTyping = () => {
   if (!titleText) return;
 
   const renderFinal = () => {
-    heroTitle.textContent = titleText;
+    heroTitle.innerHTML = '';
+
+    const titleMain = document.createElement('span');
+    titleMain.className = 'hero-title-main';
+    titleMain.textContent = titleText;
+    titleMain.style.clipPath = 'inset(0 0 0 0)';
+    titleMain.style.filter = 'blur(0)';
+    heroTitle.appendChild(titleMain);
+
     if (subtitleText) {
       const subtitle = document.createElement('span');
       subtitle.className = 'hero-title-sub';
       subtitle.textContent = subtitleText;
       heroTitle.appendChild(subtitle);
     }
-    heroTitle.classList.add('done');
+    heroTitle.classList.remove('is-writing');
+    window.requestAnimationFrame(() => {
+      heroTitle.classList.add('done');
+    });
   };
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -63,21 +74,46 @@ const initHeroTyping = () => {
     return;
   }
 
-  let index = 0;
-  heroTitle.textContent = '';
-  const typingInterval = 85;
-  let lastTime = 0;
+  heroTitle.innerHTML = '';
+  heroTitle.classList.add('is-writing');
 
-  const tick = (time) => {
-    if (time - lastTime >= typingInterval && index <= titleText.length) {
-      heroTitle.textContent = titleText.slice(0, index);
-      index += 1;
-      lastTime = time;
+  const titleMain = document.createElement('span');
+  titleMain.className = 'hero-title-main';
+  titleMain.textContent = titleText;
+  titleMain.style.clipPath = 'inset(-12% 100% -20% 0)';
+  heroTitle.appendChild(titleMain);
+
+  const pen = document.createElement('span');
+  pen.className = 'hero-pen';
+  heroTitle.appendChild(pen);
+
+  const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  const duration = 2600;
+  const startAt = performance.now();
+  let measuredWidth = 0;
+
+  const tick = (now) => {
+    if (!measuredWidth) {
+      measuredWidth = Math.max(titleMain.getBoundingClientRect().width, 1);
     }
 
-    if (index <= titleText.length) {
+    const raw = Math.min((now - startAt) / duration, 1);
+    const eased = easeInOutCubic(raw);
+    const rightInset = Math.max(0, 100 - eased * 100);
+    const wobbleY = Math.sin(raw * 18) * 1.8;
+    const wobbleRot = Math.sin(raw * 9) * 2.2;
+
+    titleMain.style.clipPath = `inset(-12% ${rightInset}% -20% 0)`;
+    titleMain.style.filter = `blur(${(1 - eased) * 1.2}px)`;
+
+    const penX = measuredWidth * eased;
+    pen.style.transform = `translate(${penX}px, calc(-45% + ${wobbleY}px)) rotate(${(0.5 - eased) * 6 + wobbleRot}deg)`;
+
+    if (raw < 1) {
       window.requestAnimationFrame(tick);
     } else {
+      pen.remove();
       renderFinal();
     }
   };
@@ -441,6 +477,7 @@ const closeTableModalBtn = document.getElementById('close-table-modal');
 const closeTableModalBackdrop = document.querySelector('[data-close-table-modal]');
 const tableMap = document.getElementById('table-map');
 const tableZoneFilter = document.getElementById('table-zone-filter');
+const tableGuestsFilter = document.getElementById('table-guests-filter');
 const selectedTableInfo = document.getElementById('selected-table-info');
 const confirmTableSelectionBtn = document.getElementById('confirm-table-selection');
 const clearTableSelectionBtn = document.getElementById('clear-table-selection');
@@ -470,6 +507,22 @@ const getBookingContext = () => {
 };
 
 const getTableById = (tableId) => RESTAURANT_TABLES.find((table) => table.id === tableId);
+
+const getGuestsField = () => bookingForm?.querySelector('[name="guests"]') || null;
+
+const syncGuestsFilterFromForm = () => {
+  const guestsField = getGuestsField();
+  if (!tableGuestsFilter || !guestsField) return;
+  tableGuestsFilter.value = guestsField.value || '';
+};
+
+const initGuestsFilterOptions = () => {
+  const guestsField = getGuestsField();
+  if (!tableGuestsFilter || !guestsField) return;
+
+  tableGuestsFilter.innerHTML = guestsField.innerHTML;
+  syncGuestsFilterFromForm();
+};
 
 const sanitizeTables = (tables) =>
   tables.filter((table) =>
@@ -623,6 +676,10 @@ const renderTableMap = () => {
   }
 
   let freeCount = 0;
+  let capacityLockedCount = 0;
+  let occupiedCount = 0;
+  let disabledCount = 0;
+
   SAFE_TABLES.forEach((table) => {
     const tableButton = document.createElement('button');
     tableButton.type = 'button';
@@ -646,6 +703,10 @@ const renderTableMap = () => {
       freeCount += 1;
     }
 
+    if (state === 'capacity-locked') capacityLockedCount += 1;
+    if (state === 'occupied') occupiedCount += 1;
+    if (state === 'disabled') disabledCount += 1;
+
     const stateLabel =
       state === 'occupied'
         ? 'Занят на выбранное время'
@@ -668,11 +729,16 @@ const renderTableMap = () => {
   });
 
   if (tableHint) {
-    const hintText =
-      freeCount > 0
-        ? 'Бронь действует 2 часа от выбранного времени.'
-        : 'На выбранные дату и время подходящих столов не найдено. Измените параметры.';
-    tableHint.innerHTML = `Доступно столов: <strong id="table-available-count">${freeCount}</strong>. ${hintText}`;
+    let hintText = 'Бронь действует 2 часа от выбранного времени.';
+    if (!context.guests) {
+      hintText = 'Укажите количество гостей для корректного подбора столов.';
+    } else if (freeCount === 0) {
+      hintText = 'На выбранные дату и время подходящих столов не найдено. Измените параметры.';
+    } else if (capacityLockedCount > 0) {
+      hintText = `Для ${context.guests} гостей часть столов скрыта по вместимости (${capacityLockedCount}).`;
+    }
+
+    tableHint.innerHTML = `Доступно столов: <strong id="table-available-count">${freeCount}</strong> · Занято: ${occupiedCount} · Недоступно: ${capacityLockedCount + disabledCount}. ${hintText}`;
   }
 
   updateTableContextPanel(getTableById(pendingTableId));
@@ -691,6 +757,9 @@ const openTableModal = () => {
   const preferredZone = 'all';
   if (tableZoneFilter) {
     tableZoneFilter.value = preferredZone;
+  }
+  if (tableGuestsFilter) {
+    tableGuestsFilter.value = context?.guests ? String(context.guests) : '';
   }
 
   pendingTableId = bookingForm.querySelector('#booking-table-id').value || null;
@@ -725,6 +794,17 @@ if (tableZoneFilter) {
   tableZoneFilter.addEventListener('change', renderTableMap);
 }
 
+if (tableGuestsFilter) {
+  tableGuestsFilter.addEventListener('change', () => {
+    if (!bookingForm) return;
+    const guestsField = getGuestsField();
+    if (!guestsField) return;
+
+    guestsField.value = tableGuestsFilter.value;
+    guestsField.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+}
+
 if (clearTableSelectionBtn) {
   clearTableSelectionBtn.addEventListener('click', () => {
     pendingTableId = null;
@@ -755,12 +835,16 @@ if (confirmTableSelectionBtn && bookingForm) {
 }
 
 if (bookingForm) {
+  initGuestsFilterOptions();
   const contextFields = ['date', 'time', 'guests', 'zone'];
   contextFields.forEach((fieldName) => {
     const field = bookingForm.querySelector(`[name="${fieldName}"]`);
     if (!field) return;
 
     field.addEventListener('change', () => {
+      if (fieldName === 'guests') {
+        syncGuestsFilterFromForm();
+      }
       updateBookingSummary();
 
       // Проверка, что ранее выбранный стол все еще подходит под новый контекст.
