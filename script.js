@@ -117,6 +117,35 @@ if (filterButtons.length && menuCards.length) {
 }
 
 // ==============================
+// Lazy background images (menu cards)
+// ==============================
+const lazyBgNodes = document.querySelectorAll('.lazy-bg[data-bg]');
+if (lazyBgNodes.length) {
+  const applyBackground = (node) => {
+    const imageUrl = node.dataset.bg;
+    if (!imageUrl) return;
+    node.style.backgroundImage = `url('${imageUrl}')`;
+    node.removeAttribute('data-bg');
+  };
+
+  if ('IntersectionObserver' in window) {
+    const bgObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          applyBackground(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '220px 0px' }
+    );
+    lazyBgNodes.forEach((node) => bgObserver.observe(node));
+  } else {
+    lazyBgNodes.forEach(applyBackground);
+  }
+}
+
+// ==============================
 // AOS анимации
 // ==============================
 if (typeof AOS !== 'undefined') {

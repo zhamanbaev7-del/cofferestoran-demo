@@ -69,6 +69,12 @@ textarea {
   isolation: isolate;
 }
 
+/* Render optimization for long one-page layouts */
+.section:not(.hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
 h1,
 h2,
 h3 {
@@ -239,7 +245,7 @@ p {
   min-height: 100svh;
   display: flex;
   align-items: center;
-  background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80");
+  background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=65");
   background-size: cover;
   background-position: center;
 }
@@ -292,35 +298,35 @@ p {
 }
 
 .menu {
-  --section-bg-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=65");
 }
 
 .vip {
-  --section-bg-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=65");
 }
 
 .booking {
-  --section-bg-image: url("https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=65");
 }
 
 .feedback {
-  --section-bg-image: url("https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=65");
 }
 
 .showcase {
-  --section-bg-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=65");
 }
 
 .gallery {
-  --section-bg-image: url("https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=65");
 }
 
 .reviews {
-  --section-bg-image: url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=65");
 }
 
 .contacts {
-  --section-bg-image: url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=80");
+  --section-bg-image: url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=65");
 }
 
 .section-collage {
@@ -1450,3 +1456,4 @@ body.table-modal-open {
       radial-gradient(circle at 50% 18%, rgba(197, 136, 84, 0.2), transparent 42%);
   }
 }
+
